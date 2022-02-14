@@ -30,11 +30,9 @@ public class webController {
 		return service.login(client);
 	}
 	@PostMapping("/sign")
-	public String create(@RequestBody Client client)
+	public int create(@RequestBody Client client)
 	{
-		if(service.sign(client)==1)
-		return "Created";
-		return "not";
+		return service.sign(client);
 	}
 	
 	@ExceptionHandler(value = Exception.class)
