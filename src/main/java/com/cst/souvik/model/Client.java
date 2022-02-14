@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-public class User {
+public class Client {
 
 	@Id
 	private String username;

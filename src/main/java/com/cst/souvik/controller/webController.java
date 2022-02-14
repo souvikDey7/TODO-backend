@@ -6,36 +6,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cst.souvik.model.User;
+import com.cst.souvik.model.Client;
 import com.cst.souvik.service.WebService;
-
 @RestController
-@CrossOrigin("http://localhost:4200")
-@ControllerAdvice
+@CrossOrigin("*")
 public class webController {
-	@Autowired
-	User user;
+
 	@Autowired
 	WebService service;
+	@GetMapping("/check")
+	public String s()
+	{
+		return "working";
+	}
 	@PostMapping("/get")
-	public int send(@RequestBody User user)
+	public int send(@RequestBody Client client)
 	{  
-		return service.login(user);
+		return service.login(client);
 	}
 	@PostMapping("/sign")
-	public int create(@RequestBody User user)
+	public String create(@RequestBody Client client)
 	{
-		return service.sign(user);
+		if(service.sign(client)==1)
+		return "Created";
+		return "not";
 	}
 	
 	@ExceptionHandler(value = Exception.class)
-	public int error()
+	public String error()
 	{
-		System.out.println("Error");
-		return 0;
+		return "Error";
 	}
 }
