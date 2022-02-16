@@ -1,5 +1,9 @@
 package com.cst.souvik.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +69,18 @@ public class webController {
 	@PostMapping("/show")
 	public Iterable<bodyD> display(@RequestBody Map<String,String> body)
 	{
-		return service.display(body.get("username"));
+		List<bodyD> a=new ArrayList<>();
+		service.display(body.get("username")).forEach(a::add);
+		Collections.sort(a,new Comparator<bodyD>(){
+			public int compare(bodyD a,bodyD b) {
+			    if(a.getId()>b.getId())
+			    	return -1;
+			    else if(a.getId()<b.getId())
+			    	return 1;
+			    else
+			    	return 0;
+			}});
+		return a;
 	}
 	@ExceptionHandler(value = Exception.class)
 	public String error()
